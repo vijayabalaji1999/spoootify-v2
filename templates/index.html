@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Songs Collection</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="main-title">Songs Collection</h1>
+      <div class="search-container">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            placeholder="Search songs..."
+            onkeydown="if(event.key === 'Enter') searchSongs()"
+            class="search-input"
+          />
+          <span id="search-button" class="search-icon">🔍</span>
+        </div>
+      </div>
+
+      <div class="movie-grid">
+        {% for movie in movies %}
+        <div class="movie-card">
+          <a
+            href="{{ url_for('song', movie_name=movie['name'], extra_param=movie['link']) }}"
+            class="movie-link"
+          >
+            <div class="image-container">
+              <img
+                src="{{ movie['image'] }}"
+                alt="{{ movie['name'] }}"
+                class="movie-image"
+                loading="lazy"
+              />
+              <div class="overlay">
+                <div class="play-icon">▶</div>
+              </div>
+            </div>
+            <div class="movie-info">
+              <h2 class="movie-title">{{ movie['name'] }}</h2>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="navigation-buttons">
+        <button class="nav-btn prev-btn">
+          <span class="btn-icon">←</span>
+          Previous
+        </button>
+        <button class="nav-btn next-btn">
+          Next
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+    </div>
+
+    <style>
+      .search-container {
+        margin-bottom: 2rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .search-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        padding-right: 3rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        color: #ffffff;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .search-input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.6);
+        pointer-events: none;
+        font-size: 1.1rem;
+      }
+
+      /* Adjust margins for better spacing */
+      .movie-grid {
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .search-wrapper {
+          max-width: 100%;
+          padding: 0 1rem;
+        }
+
+        .search-input {
+          padding: 0.8rem 1.2rem;
+          padding-right: 2.5rem;
+          font-size: 0.9rem;
+        }
+
+        .search-icon {
+          right: 2rem;
+          font-size: 1rem;
+        }
+      }
+      .navigation-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding: 1rem 0;
+      }
+
+      .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .nav-btn:active {
+        transform: translateY(0);
+      }
+
+      .prev-btn .btn-icon {
+        margin-right: 0.3rem;
+      }
+
+      .next-btn .btn-icon {
+        margin-left: 0.3rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-btn {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.9rem;
+        }
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        color: #ffffff;
+        min-height: 100vh;
+        padding: 1rem;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 0.5rem;
+      }
+
+      .main-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(45deg, #ff4d4d, #7e57c2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .movie-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+
+      .movie-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .movie-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .movie-link {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .image-container {
+        position: relative;
+        aspect-ratio: 2/3;
+        overflow: hidden;
+        background: #1a1a1a;
+      }
+
+      .movie-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+        image-rendering: -webkit-optimize-contrast;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .movie-card:hover .overlay {
+        opacity: 1;
+      }
+
+      .movie-card:hover .movie-image {
+        transform: scale(1.1);
+      }
+
+      .play-icon {
+        font-size: 2rem;
+        color: #ffffff;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .movie-info {
+        padding: 0.8rem;
+      }
+
+      .movie-title {
+        font-size: 0.9rem;
+        color: #ffffff;
+        text-align: center;
+        margin: 0;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          max-width: 600px;
+        }
+
+        .movie-grid {
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+          gap: 0.8rem;
+        }
+
+        .main-title {
+          font-size: 1.5rem;
+        }
+
+        .movie-title {
+          font-size: 0.8rem;
+        }
+
+        .play-icon {
+          width: 35px;
+          height: 35px;
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 0.5rem;
+        }
+
+        .container {
+          padding: 0 0.3rem;
+        }
+
+        .movie-grid {
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+          gap: 0.6rem;
+        }
+
+        .movie-title {
+          font-size: 0.75rem;
+        }
+
+        .play-icon {
+          width: 30px;
+          height: 30px;
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </body>
+  <script>
+    function searchSongs() {
+      const value = document.querySelector('.search-input').value;
+      if (!value.trim()) return;
+
+      const textValue = value.toLowerCase().trim().split(' ').join('-');
+
+      window.location.href = '/search/' + textValue;
+    }
+  </script>
+</html>

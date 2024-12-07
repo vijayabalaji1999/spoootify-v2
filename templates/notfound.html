@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Song Not Found</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="error-card">
+        <div class="error-icon">🎵</div>
+        <h1 class="error-title">Oops! Song Not Found</h1>
+        <p class="error-message">
+          Sorry, we couldn't find the song you're looking for.
+        </p>
+        <a href="{{ url_for('index') }}" class="back-button">
+          <span class="back-icon">←</span>
+          Back to Home
+        </a>
+      </div>
+    </div>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .error-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .error-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .error-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #ff4d4d, #7e57c2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+      }
+
+      .error-message {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        line-height: 1.5;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateX(-5px);
+      }
+
+      .back-icon {
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 768px) {
+        .error-card {
+          padding: 2rem 1.5rem;
+        }
+
+        .error-icon {
+          font-size: 3rem;
+        }
+
+        .error-title {
+          font-size: 1.5rem;
+        }
+
+        .error-message {
+          font-size: 1rem;
+        }
+
+        .back-button {
+          padding: 0.7rem 1.2rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </body>
+</html>
